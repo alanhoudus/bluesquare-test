@@ -11,9 +11,6 @@ from tickets.serializers.output import TicketOutput
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_all_tickets(request):
-    if request.user.role != 'dev':
-        return Response({}, status=401)
-
     tickets = Ticket.objects.all()
     print(tickets.first().id)
     return Response(TicketOutput(instance=tickets, many=True).data, status=200)
